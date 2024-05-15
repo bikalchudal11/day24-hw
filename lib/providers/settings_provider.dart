@@ -1,5 +1,4 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:convert';
 
 import 'package:day24/resources/constants.dart';
 import 'package:flutter/foundation.dart';
@@ -35,6 +34,11 @@ class SettingsProvider with ChangeNotifier {
     Colors.blue,
     Colors.yellow,
   ];
+
+  void fontUpdate(String value) {
+    dropdownValue = value;
+    notifyListeners();
+  }
 
   void switchFontFamily(String font) {
     dropdownValue = font;

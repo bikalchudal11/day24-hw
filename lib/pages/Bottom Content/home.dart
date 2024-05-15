@@ -3,12 +3,12 @@
 import 'dart:convert';
 
 import 'package:day24/providers/people_provider.dart';
+import 'package:day24/providers/settings_provider.dart';
 import 'package:day24/resources/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
-import 'package:http/http.dart' as http;
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -26,15 +26,15 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    var prov = Provider.of<SettingsProvider>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: pColor,
-        foregroundColor: sColor,
+        backgroundColor: prov.selectedColor,
+        foregroundColor: Colors.white,
         title: Text(
           "Peoples",
           style: TextStyle(
-            fontSize: 23,
-            color: sColor,
+            fontSize: prov.fontSize + 4,
             fontWeight: FontWeight.w600,
           ),
         ),
@@ -54,9 +54,11 @@ class _HomeState extends State<Home> {
                         return Padding(
                           padding: const EdgeInsets.symmetric(vertical: 5.0),
                           child: Card(
+                            color: Color.fromARGB(255, 248, 246, 246),
                             child: ListTile(
                               contentPadding: EdgeInsets.all(12),
                               leading: Checkbox(
+                                activeColor: prov.selectedColor,
                                 onChanged: (v) {
                                   value.setSelectedId(v == false
                                       ? null
@@ -68,12 +70,15 @@ class _HomeState extends State<Home> {
                               title: Text(
                                 value.peopleList[index]['name'],
                                 style: TextStyle(
-                                  fontSize: 19,
+                                  fontSize: prov.fontSize,
+                                  color: prov.selectedColor,
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),
                               subtitle: Text(
-                                  value.peopleList[index]["address"]["city"]),
+                                value.peopleList[index]["address"]["city"],
+                                style: TextStyle(color: prov.selectedColorSec),
+                              ),
                             ),
                           ),
                         );

@@ -17,8 +17,7 @@ class PeopleProvider with ChangeNotifier {
 //select listTile on clicked
   void setSelectedId(int? id) {
     selectedPersonId = id;
-    // print(peopleList[selectedPersonId! - 1]);
-    // print(peopleList[(selectedPersonId! - 1)]["name"]);
+
     notifyListeners();
   }
 

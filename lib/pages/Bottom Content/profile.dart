@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables
 
 import 'package:day24/providers/people_provider.dart';
+import 'package:day24/providers/settings_provider.dart';
 import 'package:day24/resources/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -10,14 +11,16 @@ class Profile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var prov = Provider.of<SettingsProvider>(context, listen: false);
+
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: pColor,
-        foregroundColor: sColor,
+        backgroundColor: prov.selectedColor,
+        foregroundColor: Colors.white,
         title: Text(
           "Profile",
           style: TextStyle(
-            fontSize: 23,
+            fontSize: prov.fontSize + 4,
             color: sColor,
             fontWeight: FontWeight.w600,
           ),
@@ -30,9 +33,11 @@ class Profile extends StatelessWidget {
           child: Column(
             children: [
               CircleAvatar(
+                backgroundColor: prov.selectedColor,
                 radius: 60,
                 child: Icon(
                   Icons.person,
+                  color: Colors.white,
                   size: 90,
                 ),
               ),
@@ -48,7 +53,8 @@ class Profile extends StatelessWidget {
                               textAlign: TextAlign.center,
                               "Please select person from home to view their details !",
                               style: TextStyle(
-                                fontSize: 17,
+                                color: prov.selectedColor,
+                                fontSize: prov.fontSize - 2,
                               ),
                             ),
                           )
@@ -60,12 +66,15 @@ class Profile extends StatelessWidget {
                                 children: [
                                   Text(
                                     "Name:",
-                                    style: TextStyle(fontSize: 16),
+                                    style: TextStyle(
+                                        fontSize: prov.fontSize - 3,
+                                        color: prov.selectedColorSec),
                                   ),
                                   Text(
                                     value.viewDetails()["name"],
                                     style: TextStyle(
-                                      fontSize: 20,
+                                      color: prov.selectedColor,
+                                      fontSize: prov.fontSize + 1,
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),
@@ -80,12 +89,16 @@ class Profile extends StatelessWidget {
                                 children: [
                                   Text(
                                     "Address:",
-                                    style: TextStyle(fontSize: 16),
+                                    style: TextStyle(
+                                      fontSize: prov.fontSize - 3,
+                                      color: prov.selectedColorSec,
+                                    ),
                                   ),
                                   Text(
                                     value.viewDetails()["address"]["city"],
                                     style: TextStyle(
-                                      fontSize: 18,
+                                      color: prov.selectedColor,
+                                      fontSize: prov.fontSize - 1,
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),
@@ -100,12 +113,16 @@ class Profile extends StatelessWidget {
                                 children: [
                                   Text(
                                     "Works in:",
-                                    style: TextStyle(fontSize: 16),
+                                    style: TextStyle(
+                                      fontSize: prov.fontSize - 3,
+                                      color: prov.selectedColorSec,
+                                    ),
                                   ),
                                   Text(
                                     value.viewDetails()["company"]["name"],
                                     style: TextStyle(
-                                      fontSize: 18,
+                                      color: prov.selectedColor,
+                                      fontSize: prov.fontSize - 1,
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),
@@ -120,12 +137,16 @@ class Profile extends StatelessWidget {
                                 children: [
                                   Text(
                                     "Phone:",
-                                    style: TextStyle(fontSize: 16),
+                                    style: TextStyle(
+                                      fontSize: prov.fontSize - 3,
+                                      color: prov.selectedColorSec,
+                                    ),
                                   ),
                                   Text(
                                     value.viewDetails()["phone"],
                                     style: TextStyle(
-                                      fontSize: 18,
+                                      color: prov.selectedColor,
+                                      fontSize: prov.fontSize - 1,
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),
@@ -140,12 +161,16 @@ class Profile extends StatelessWidget {
                                 children: [
                                   Text(
                                     "Email:",
-                                    style: TextStyle(fontSize: 16),
+                                    style: TextStyle(
+                                      fontSize: prov.fontSize - 3,
+                                      color: prov.selectedColorSec,
+                                    ),
                                   ),
                                   Text(
                                     value.viewDetails()["email"],
                                     style: TextStyle(
-                                      fontSize: 18,
+                                      color: prov.selectedColor,
+                                      fontSize: prov.fontSize - 1,
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),

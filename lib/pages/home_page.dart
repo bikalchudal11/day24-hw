@@ -3,9 +3,11 @@
 import 'package:day24/pages/Bottom%20Content/home.dart';
 import 'package:day24/pages/Bottom%20Content/profile.dart';
 import 'package:day24/pages/Bottom%20Content/settings.dart';
+import 'package:day24/providers/settings_provider.dart';
 import 'package:day24/resources/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -29,9 +31,11 @@ class _HomePageState extends State<HomePage> {
   ];
   @override
   Widget build(BuildContext context) {
+    var prov = Provider.of<SettingsProvider>(context, listen: false);
     return Scaffold(
       body: pages[index],
       bottomNavigationBar: BottomNavigationBar(
+        selectedItemColor: prov.selectedColor,
         currentIndex: index,
         onTap: (value) {
           _selectedIndex(value);
