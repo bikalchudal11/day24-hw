@@ -20,7 +20,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => SettingsProvider()),
       ],
       child: MaterialApp(
-        theme: ThemeData(fontFamily: "Roboto"),
+        theme: ThemeData(
+          fontFamily: "Roboto",
+        ),
         debugShowCheckedModeBanner: false,
         home: HomePage(),
       ),

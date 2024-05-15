@@ -26,52 +26,44 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Align(
-          alignment: Alignment.center,
-          child: Container(
-            height: 60,
-            width: MediaQuery.of(context).size.width,
-            decoration: BoxDecoration(
-              color: pColor,
-            ),
-            child: Center(
-              child: Text(
-                "Peoples",
-                style: TextStyle(
-                  fontSize: 23,
-                  color: sColor,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: pColor,
+        foregroundColor: sColor,
+        title: Text(
+          "Peoples",
+          style: TextStyle(
+            fontSize: 23,
+            color: sColor,
+            fontWeight: FontWeight.w600,
           ),
         ),
-        SizedBox(
-          height: 20,
-        ),
-        Expanded(
-          child: Consumer<PeopleProvider>(
-            builder: (context, value, child) {
-              return value.peopleList.isEmpty
-                  ? Center(
-                      child: CircularProgressIndicator(),
-                    )
-                  : ListView.builder(
+        centerTitle: true,
+      ),
+      body: Consumer<PeopleProvider>(
+        builder: (context, value, child) {
+          return value.peopleList.isEmpty
+              ? Center(
+                  child: CircularProgressIndicator(),
+                )
+              : Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: ListView.builder(
                       itemCount: value.peopleList.length,
                       itemBuilder: (context, index) {
                         return Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 20.0, vertical: 5),
+                          padding: const EdgeInsets.symmetric(vertical: 5.0),
                           child: Card(
                             child: ListTile(
                               contentPadding: EdgeInsets.all(12),
                               leading: Checkbox(
                                 onChanged: (v) {
-                                  value.updateIsChecked(index, v!);
+                                  value.setSelectedId(v == false
+                                      ? null
+                                      : value.peopleList[index]['id']);
                                 },
-                                value: value.isChecked,
+                                value: (value.selectedPersonId ?? 0) ==
+                                    value.peopleList[index]['id'],
                               ),
                               title: Text(
                                 value.peopleList[index]['name'],
@@ -85,11 +77,10 @@ class _HomeState extends State<Home> {
                             ),
                           ),
                         );
-                      });
-            },
-          ),
-        ),
-      ],
+                      }),
+                );
+        },
+      ),
     );
   }
 }

@@ -5,8 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class PeopleProvider with ChangeNotifier {
-  bool isChecked = false;
   List<Map<String, dynamic>> peopleList = [];
+
+  int? selectedPersonId;
 
   PeopleProvider() {
     //fetch people list from api
@@ -14,9 +15,16 @@ class PeopleProvider with ChangeNotifier {
   }
 
 //select listTile on clicked
-  updateIsChecked(int index, bool status) {
-    isChecked = status;
+  void setSelectedId(int? id) {
+    selectedPersonId = id;
+    // print(peopleList[selectedPersonId! - 1]);
+    // print(peopleList[(selectedPersonId! - 1)]["name"]);
     notifyListeners();
+  }
+
+//view data of clicked person
+  Map<String, dynamic> viewDetails() {
+    return peopleList[selectedPersonId! - 1];
   }
 
   Future<void> fetchData() async {

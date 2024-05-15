@@ -22,14 +22,15 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  List<Widget> pages = [
+    Home(),
+    Profile(),
+    Settings(),
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: [
-        Home(),
-        Profile(),
-        Settings(),
-      ][index],
+      body: pages[index],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: index,
         onTap: (value) {
