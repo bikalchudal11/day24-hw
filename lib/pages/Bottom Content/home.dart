@@ -44,7 +44,9 @@ class _HomeState extends State<Home> {
         builder: (context, value, child) {
           return value.peopleList.isEmpty
               ? Center(
-                  child: CircularProgressIndicator(),
+                  child: CircularProgressIndicator(
+                    color: prov.selectedColor,
+                  ),
                 )
               : Padding(
                   padding: const EdgeInsets.all(20.0),

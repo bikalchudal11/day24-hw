@@ -16,7 +16,7 @@ class IncreDecreContainer extends StatelessWidget {
       width: 50,
       decoration: BoxDecoration(
         border: Border.all(
-          color: prov.selectedColor,
+          color: prov.selectedColor!,
         ),
       ),
       child: Center(child: iconName),

@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, must_be_immutable, sized_box_for_whitespace
+// ignore_for_file: prefer_const_literals_to_create_immutables, must_be_immutable, sized_box_for_whitespace, use_build_context_synchronously
 
 import 'package:day24/providers/settings_provider.dart';
 import 'package:day24/resources/components/incre_decre_container.dart';
@@ -6,6 +6,7 @@ import 'package:day24/resources/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
 
 class Settings extends StatefulWidget {
@@ -16,6 +17,25 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
+  Future<void> saveSettings(
+      double fSize, String fFamily, Color pColor, Color sColor) async {
+    var prefs = await SharedPreferences.getInstance();
+    var prov = Provider.of<SettingsProvider>(context, listen: false);
+    await prefs.setDouble("fSize", fSize);
+    await prefs.setString("fFamily", fFamily);
+    await prefs.setInt("pColor", pColor.value);
+    await prefs.setInt("sColor", sColor.value);
+
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      padding: EdgeInsets.all(23),
+      backgroundColor: prov.selectedColor,
+      content: Text(
+        "Settings Saved!",
+        style: TextStyle(fontSize: 17),
+      ),
+    ));
+  }
+
   @override
   Widget build(BuildContext context) {
     var prov = Provider.of<SettingsProvider>(context, listen: false);
@@ -69,7 +89,7 @@ class _SettingsState extends State<Settings> {
                           decoration: BoxDecoration(
                             border: Border.symmetric(
                                 horizontal:
-                                    BorderSide(color: prov.selectedColor)),
+                                    BorderSide(color: prov.selectedColor!)),
                           ),
                           child: Center(
                             child: Consumer<SettingsProvider>(
@@ -390,7 +410,14 @@ class _SettingsState extends State<Settings> {
               ],
             ),
             InkWell(
-              onTap: () {},
+              onTap: () {
+                saveSettings(
+                  prov.fontSize,
+                  prov.dropdownValue!,
+                  prov.selectedColor!,
+                  prov.selectedColorSec!,
+                );
+              },
               child: Container(
                 height: 50,
                 width: MediaQuery.of(context).size.width,

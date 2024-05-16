@@ -20,7 +20,9 @@ class MyApp extends StatelessWidget {
       ],
       child: Consumer<SettingsProvider>(builder: (context, value, child) {
         return MaterialApp(
-          theme: ThemeData(fontFamily: value.dropdownValue),
+          theme: ThemeData(
+            fontFamily: value.dropdownValue,
+          ),
           debugShowCheckedModeBanner: false,
           home: HomePage(),
         );
